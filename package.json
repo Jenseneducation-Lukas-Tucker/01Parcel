@@ -1,0 +1,23 @@
+{
+  "name": "01Parcel",
+  "version": "1.0.0",
+  "description": "byggverktyg demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel serv ./src/index.html --no-cache",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Parcel"
+  ],
+  "author": "Lukas Tucker",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.12",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "vue-template-compiler": "^2.6.12"
+  }
+}
