@@ -8884,13 +8884,19 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],"components/App.vue":[function(require,module,exports) {
+},{}],"components/Gif.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -8898,10 +8904,151 @@ exports.default = void 0;
 //
 //
 var _default = {
+  name: 'Gif',
+  data: function data() {
+    return {
+      imageBytes: ''
+    };
+  },
+  computed: {
+    checkNodeEnv: function checkNodeEnv() {
+      if ("development" == 'production') {
+        return true;
+      } else if ("development" == 'development') {
+        return false;
+      } else {
+        return null;
+      }
+    }
+  },
+  methods: {
+    fetchAPI: function fetchAPI() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var self;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = _this;
+                _context.next = 3;
+                return fetch('https://placekitten.com/g/100/100').then(function (response) {
+                  return response.blob();
+                }).then(function (blob) {
+                  var reader = new FileReader();
+
+                  reader.onload = function () {
+                    self.imageBytes = this.result; // <--- `this.result` contains a base64 data URI
+                  };
+
+                  reader.readAsDataURL(blob);
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  created: function created() {
+    console.log("development");
+  },
+  mounted: function mounted() {
+    this.fetchAPI();
+  }
+};
+exports.default = _default;
+        var $c3e80c = exports.default || module.exports;
+      
+      if (typeof $c3e80c === 'function') {
+        $c3e80c = $c3e80c.options;
+      }
+    
+        /* template */
+        Object.assign($c3e80c, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    !_vm.checkNodeEnv
+      ? _c("div", { staticClass: "square" }, [_c("h1", [_vm._v("Dev mode")])])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.checkNodeEnv
+      ? _c("img", { attrs: { src: _vm.imageBytes, alt: "cat" } })
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.checkNodeEnv == null
+      ? _c("h1", [_vm._v("You're doing something wrong, pal")])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$c3e80c', $c3e80c);
+          } else {
+            api.reload('$c3e80c', $c3e80c);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"components/App.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Gif = _interopRequireDefault(require("./Gif"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "App",
   data: function data() {
     return {
       value: 'random value'
     };
+  },
+  components: {
+    Gif: _Gif.default
   }
 };
 exports.default = _default;
@@ -8917,9 +9064,15 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", {}, [
-    _vm._v("\n\tApp component displays " + _vm._s(_vm.value) + "\n")
-  ])
+  return _c(
+    "div",
+    {},
+    [
+      _vm._v("\n\t\tApp component displays " + _vm._s(_vm.value) + "\n    "),
+      _c("Gif")
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -8954,7 +9107,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"index.js":[function(require,module,exports) {
+},{"./Gif":"components/Gif.vue","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -8963,7 +9116,7 @@ var _App = _interopRequireDefault(require("./components/App.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log('Environment variable demo: ' + undefined);
+console.log('Environment variable demo: ' + "development");
 new _vue.default({
   render: function render(h) {
     return h(_App.default);
@@ -8997,7 +9150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52032" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53460" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
